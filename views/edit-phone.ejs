@@ -1,0 +1,31 @@
+<html lang="en">
+<%- include("./partials/head.ejs") %>
+
+<body>
+  <%- include("./partials/nav.ejs") %>
+
+  <h2>Edit-Profile</h2>
+
+  <div class="create-blog content">
+    <form action="/edit-phone/<%= phone.id %>" method="POST">
+      <label for="esn">ESN:</label>
+      <input type="text" value="<%= phone.esn %>" id="esn" name="esn" required>
+      <label for="model">Model:</label>
+      <input type="text" value="<%= phone.model %>" id="model" name="model" required>
+      <label for="carrier">Carrier:</label>
+      <input type="text" value="<%= phone.carrier %>" name="carrier" id="carrier" required>
+      <label for="barcode">Bar Code:</label>
+      <input type="text" value="<%= phone.barcode %>" name="barcode" id="barcode" required>
+      <label for="PhRmLoc">Ph Rm Loc:</label>
+      <input type="text" value="<%= phone.PhRmLoc %>" name="PhRmLoc" id="PhRmLoc">
+      <label for="CurLoc">Cur Loc:</label>
+      <input type="CurLoc" value="<%= phone.CurLoc %>" name="CurLoc" id="CurLoc">
+      <label for="Note">Note:</label>
+      <input type="Note" value="<%= phone.Note %>" name="Note" id="Note">     
+      <button type="submit">Update</button>
+    </form>
+  </div>
+
+  <%- include("./partials/footer.ejs") %>
+</body>
+</html>

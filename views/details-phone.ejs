@@ -1,0 +1,33 @@
+<html lang="en">
+<%- include("./partials/head.ejs") %>
+
+<body>
+  <%- include("./partials/nav.ejs") %>
+
+  <div class="details content">
+    <h1>Profile:</h1>
+    <h2><%= phone.esn%></h2>
+    <div class="content">
+      <p><span>Model:</span><%= phone.model %></p>
+      <p><span>Carrier:</span><%= phone.carrier %></p>
+      <p><span>Bar Code:</span><%= phone.barcode %></p>
+      <p><span>Ph Rm Loc:</span><%= phone.PhRmLoc %></p>
+      <p><span>Cur Loc:</span><%= phone.CurLoc %></p>
+      <p><span>Note:</span><%= phone.Note %></p>
+    </div>
+  </div>
+
+
+ <div class="operation-btn">
+   <br>
+   <form action="/phones/<%= phone.esn %>" method="post">
+    <button type="submit" >Remove</button>
+  </form>
+   <form action="/edit-phone/<%= phone.esn %>/<%= action %>" method="edit">
+    <button type="submit">Updates</button>
+  </form>
+ </div>
+
+  <%- include("./partials/footer.ejs") %>
+</body>
+</html>
