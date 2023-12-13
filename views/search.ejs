@@ -1,0 +1,57 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles.css">
+    <title>Phone Search</title>
+</head>
+
+<body>
+    <%- include("./partials/nav.ejs") %>
+    <h1>Phone Search</h1>
+    
+
+    <form action="/search" method="post">
+        <label for="keywords">Search Keywords:</label>
+        <input type="text" id="keywords" name="keywords" required>
+        <button type="submit">Search</button>
+    </form>
+
+    <h2>Search Results:</h2>
+    <div class="blogs content">
+            <% if (locals.phones && locals.phones.length > 0) { %>
+                <table>
+                    <tr>
+                        <th>ESN</th>
+                        <th>Model</th>
+                        <th>Carrier</th>
+                        <th>Barcode</th>
+                        <th>PhRmLoc</th>
+                        <th>CurLoc</th>
+                        <th>Note</th>
+                    </tr>
+                <% phones.forEach(phone => { %>
+                    <tr onclick="window.location='/phones/<%= phone.id %>'" style="cursor:pointer;">
+                        <td><%= phone.esn %></td>
+                        <td><%= phone.model %></td>
+                        <td><%= phone.carrier %></td>
+                        <td><%= phone.barcode %></td>
+                        <td><%= phone.PhRmLoc %></td>
+                        <td><%= phone.CurLoc %></td>
+                        <td><%= phone.Note %></td>
+                        <!-- Add other fields as needed -->
+                        </a>
+                    </tr>
+                <% }); %>  
+                </table>
+
+            <% } else { %>
+                <p>No results found.</p>
+            <% } %>
+    </div>
+    <%- include("./partials/footer.ejs") %>
+</body>
+</html>

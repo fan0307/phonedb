@@ -5,6 +5,10 @@
   <%- include("./partials/nav.ejs") %>
 
   <div class="create-blog content">
+    
+    <h3>Hi, <%= user.username %></h3>
+    <h3>only admin users can edit data</h3>
+
     <form action="/phone/create" method="POST">
       <label for="esn">ESN:</label>
       <input type="text" id="esn" name="esn" required>

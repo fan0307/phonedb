@@ -1,53 +1,124 @@
 const express = require('express');
+const session = require('express-session');
+const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const User = require('./models/user');
 const Phone = require('./models/phone');
 
-// express app
-const app = express();
 
 // connect to mongodb & listen for requests
 //const dbURI = "paste here your mongodb uri that can be get form connect button";
 const dbURI = "mongodb://127.0.0.1:27017/phonedb";
 //const dbURI = "mongodb://localhost:60380/futuredial";
-
+const port = 8080;
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true }) //this return promise
-  .then((result) =>{ console.log("Database-connected"); app.listen(8080)})
+  .then((result) =>{ console.log("Database-connected"); app.listen(port); console.log(`running on port ${port}...`)})
   //after db connected than it will listen to port3000
   .catch(err => console.log(err)); //else errors will be shown
 
+// express app
+const app = express();
 
 // register view engine
 app.set('view engine', 'ejs');
- 
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(
+  session({
+    secret: 'your-secret-key',
+    resave: false,
+    saveUninitialized: true,
+  })
+); 
 // middleware & static files
 app.use(express.static('public')); //this will helps to use style.css file
 app.use(express.urlencoded({ extended: true })); //this will helps to get submitted data of form in req.body obj
 
+var search = require('./routes/search');
+app.use('/',search);
 
+/***************************** login++ **************************************************/
+const users = [
+  { username: 'admin', password: 'password' },
+  { username: 'user', password: '123456' },
+];
+
+// Middleware to check if a user is logged in
+function requireLogin(req, res, next) {
+  if (req.session.user) {
+    console.log("requireLogin: "+ req.session.user);
+    next();
+  } else {
+    res.redirect('/login');
+  }
+}
+// Routes
+// app.get('/', requireLogin, (req, res) => {
+//   // Your CRUD operations and views here
+//   console.log(req.session);
+//   res.render('index',{ user: req.session.user });
+// });
+
+app.get('/login', (req, res) => {
+  res.render('login');
+});
+
+app.post('/login', (req, res) => {
+  const { username, password } = req.body;
+
+  const user = users.find((u) => u.username === username && u.password === password);
+
+  if (user) {
+    req.session.user = user;
+    res.redirect('/');
+  } else {
+    res.render('login', { error: 'Invalid username or password' });
+  }
+});
+
+app.get('/logout', (req, res) => {
+  req.session.destroy(() => {
+    res.redirect('/login');
+  });
+});
+
+/****************************login--***************************************************/
 
 // home routes
 app.get('/', (req, res) => {
-  res.redirect('/phones'); //this will redirect page to /users
+  res.redirect('/phones'); //this will redirect page to /phones
 });
 
 //users i.e index route
-app.get('/users',(req,res)=>{
-  console.log("req made on"+req.url);
-   User.find().sort({createdAt:-1})//it will find all data and show it in descending order
-    .then(result => { 
-      res.render('index', { users: result ,title: 'Home' }); //it will then render index page along with users
-    })
-    .catch(err => {
-      console.log(err);
-    });
-})
+// app.get('/users',(req,res)=>{
+//   console.log("req made on"+req.url);
+//    User.find().sort({createdAt:-1})//it will find all data and show it in descending order
+//     .then(result => { 
+//       res.render('index', { users: result ,title: 'Home' }); //it will then render index page along with users
+//     })
+//     .catch(err => {
+//       console.log(err);
+//     });
+// })
 //phones i.e index route
+// app.get('/phones',requireLogin,(req,res)=>{
+//   console.log("req made on"+req.url);
+//   console.log(req.session);
+//    Phone.find().sort({createdAt:-1})//it will find all data and show it in descending order
+//     .then(result => { 
+//       res.render('phone', { phones: result ,title: 'Phone-Home',user: req.session.user }); //it will then render index page along with users
+//     })
+//     .catch(err => {
+//       console.log(err);
+//     });
+// })
+
 app.get('/phones',(req,res)=>{
   console.log("req made on"+req.url);
+  console.log(req.session);
    Phone.find().sort({createdAt:-1})//it will find all data and show it in descending order
     .then(result => { 
-      res.render('phone', { phones: result ,title: 'Phone-Home' }); //it will then render index page along with users
+      res.render('phone', { phones: result ,title: 'Phone-Home'}); //it will then render index page along with users
     })
     .catch(err => {
       console.log(err);
@@ -61,33 +132,33 @@ app.get('/about',(req,res)=>{
 })
 
 //route for user create
-app.get('/user/create',(req,res)=>{
-  console.log("GET req made on"+req.url);
-  res.render('adduser',{title:'Add-User'});
-})
+// app.get('/user/create',(req,res)=>{
+//   console.log("GET req made on"+req.url);
+//   res.render('adduser',{title:'Add-User'});
+// })
 //route for phone create
-app.get('/phone/create',(req,res)=>{
+app.get('/phone/create',requireLogin,(req,res)=>{
   console.log("GET req made on"+req.url);
-  res.render('addphone',{title:'Add-Phone'});
+  res.render('addphone',{title:'Add-Phone',user: req.session.user});
 })
 
 //route for users/withvar
-app.get('/users/:id', (req, res) => {
-  const id = req.params.id;
-  User.findById(id)
-    .then(result => {
-      res.render('details', { user: result, action:'edit',title: 'User Details' });
-    })
-    .catch(err => {
-      console.log(err);
-    });
-});
+// app.get('/users/:id',(req, res) => {
+//   const id = req.params.id;
+//   User.findById(id)
+//     .then(result => {
+//       res.render('details', { user: result, action:'edit',title: 'User Details' });
+//     })
+//     .catch(err => {
+//       console.log(err);
+//     });
+// });
 //route for phones/withvar
-app.get('/phones/:id', (req, res) => {
+app.get('/phones/:id',requireLogin,(req, res) => {
   const id = req.params.id;
   Phone.findById(id)
     .then(result => {
-      res.render('details-phone', { phone: result, action:'edit',title: 'Phone Details' });
+      res.render('details-phone', { phone: result, action:'edit',title: 'Phone Details',user: req.session.user});
     })
     .catch(err => {
       console.log(err);

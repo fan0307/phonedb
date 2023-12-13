@@ -77,6 +77,33 @@
     .details{
       position: relative;
     }
+
+    .details {
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+  
+    .details h1 {
+      text-align: center;
+      color: #333;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+  
+    .content p {
+      font-size: 16px;
+      color: #666;
+      line-height: 1.6;
+    }
+  
+    .content span {
+      font-weight: bold;
+      color: #333;
+    }
     .delete{
       position: absolute;
       top: 0;
@@ -84,7 +111,7 @@
       border-radius: 50%;
       padding: 8px;
     }
-    .operation-btn{
+    /* .operation-btn{
       margin-left:40px;
     }
     button {
@@ -96,14 +123,46 @@
     }
     
     button:hover {
-      background-color: #303631; /* Green */
+      background-color: #303631; 
       color: white;
     }
     .delete:hover{
       cursor: pointer;
       box-shadow: 1px 2px 3px rgba(0,0,0,0.2);
+    } */
+    .operation-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-top: 20px;
     }
-
+  
+    .operation-btn form {
+      margin: 10px;
+    }
+  
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+  
+    button:hover {
+      background-color: #45a049;
+    }
+    .remove-btn {
+      background-color: #f44336; /* Red color */
+    }
+  
+    .remove-btn:hover {
+      background-color: #d32f2f; /* Darker red on hover */
+    }
+    
     /* create styles */
     .create-blog form{
       max-width: 400px;
@@ -142,5 +201,45 @@
     span{
       font-weight: bolder;
     }
+/****************** table ******************/
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: left;
+    }
+    
+    th {
+      background-color: #4CAF50;
+      color: white;
+    }
 
+    /* row highlighting */
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+    
+    tr:hover {
+      background-color: #ddd;
+    }
+    /* Clickable Rows: Make it obvious that rows are clickable. */
+    tr[onclick] {
+      cursor: pointer;
+    }
+    /* Responsive Design: Ensure the table looks good on various devices. */
+    @media screen and (max-width: 600px) {
+      table {
+        width: 100%;
+      }
+      th, td {
+        display: block;
+        width: 100%;
+      }
+    }
+    
     
