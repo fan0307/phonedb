@@ -36,6 +36,28 @@ app.use(express.urlencoded({ extended: true })); //this will helps to get submit
 
 var search = require('./routes/search');
 app.use('/',search);
+/**************************auth****************************************************/
+const authenticate = async (req, res, next) => {
+  try {
+    // Example: Authenticate based on user ID in request header
+    const user = await User.findById(req.header('userId'));
+    if (!user) {
+      return res.status(401).send('Authentication failed');
+    }
+    req.user = user;
+    next();
+  } catch (error) {
+    res.status(500).send('Internal Server Error');
+  }
+};
+
+const isAdmin = (req, res, next) => {
+  if (req.user && req.user.role === 'admin') {
+    return next();
+  }
+  res.status(403).send('Access denied');
+};
+
 
 /***************************** login++ **************************************************/
 const users = [

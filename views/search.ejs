@@ -32,6 +32,7 @@
                         <th>PhRmLoc</th>
                         <th>CurLoc</th>
                         <th>Note</th>
+                        <th>Inventory_Status</th>
                     </tr>
                 <% phones.forEach(phone => { %>
                     <tr onclick="window.location='/phones/<%= phone.id %>'" style="cursor:pointer;">
@@ -42,6 +43,7 @@
                         <td><%= phone.PhRmLoc %></td>
                         <td><%= phone.CurLoc %></td>
                         <td><%= phone.Note %></td>
+                        <td><%= phone.Inventory_Status %></td>
                         <!-- Add other fields as needed -->
                         </a>
                     </tr>

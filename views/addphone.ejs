@@ -1,6 +1,20 @@
 <html lang="en">
 <%- include("./partials/head.ejs") %>
 
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<script>
+$(document).ready(function() {
+  $('.select2-enable').select2({
+    tags: true, // Allows the input of custom tags
+    tokenSeparators: [','], // Specifies characters that will automatically trigger a new tag
+    placeholder: "Select or type",
+    allowClear: true // Allows a clear button to be included
+  });
+});
+</script>
+
 <body>
   <%- include("./partials/nav.ejs") %>
 
@@ -14,16 +28,88 @@
       <input type="text" id="esn" name="esn" required>
       <label for="model">Model:</label>
       <input type="text" id="model" name="model" required>
+      <label for="maker">Maker:</label>
+      <!-- <input type="text" name="maker" id="maker" required> -->
+      <select class="select2-enable" id="maker" name="maker" style="width: 400px;">
+        <option></option> <!-- Placeholder for searching or typing -->
+        <option value="Apple">Apple</option>
+        <option value="Samsung">Samsung</option>
+        <option value="HTC">HTC</option>
+        <option value="Google">Google</option>
+        <option value="Motorola">Motorola</option>
+        <option value="LG">LG</option>
+        <option value="Lenovo">Lenovo</option>
+        <option value="Kyocera">Kyocera</option>
+      </select>
       <label for="carrier">Carrier:</label>
-      <input type="text" name="carrier" id="carrier" required>
+      <!-- <input type="text" name="carrier" id="carrier" required> -->
+      <select class="select2-enable" id="carrier" name="carrier" style="width: 400px;">
+        <option></option> <!-- Placeholder for searching or typing -->
+        <option value="AT&T">AT&T</option>
+        <option value="Verizon">Verizon</option>
+        <option value="Sprint">Sprint</option>
+        <option value="T-Mobile US">T-Mobile US</option>
+        <option value="T-Mobile Germany">T-Mobile Germany</option>
+        <option value="T-Mobile UK">T-Mobile UK</option>
+        <option value="Futuredial">Futuredial</option>
+      </select>
       <label for="barcode">Bar Code:</label>
       <input type="text" name="barcode" id="barcode" required>
       <label for="PhRmLoc">Ph Rm Loc:</label>
       <input type="text" name="PhRmLoc" id="PhRmLoc">
       <label for="CurLoc">Cur Loc:</label>
-      <input type="CurLoc" name="CurLoc" id="CurLoc">
+      <!-- <input type="text" name="CurLoc" id="CurLoc"> -->
+      <select class="select2-enable" id="CurLoc" name="CurLoc" style="width: 400px;">
+        <option></option> <!-- Placeholder for searching or typing -->
+        <option value=".">.</option>
+        <option value="Adrian Xu">Adrian Xu</option>
+        <option value="Chris Chen">Chris Chen</option>
+        <option value="Jason Li">Jason Li</option>
+        <option value="Lynn Wang">Lynn Wang</option>
+        <option value="Nick Zhang">Nick Zhang</option>
+        <option value="Jet Li">Jet Li</option>
+        <option value="Jeffery Zhang">Jeffery Zhang</option>
+        <option value="Darren Madonick">Darren Madonick</option>
+        <option value="Hexi Huang">Hexi Huang</option>
+        <option value="Richard Cao">Richard Cao</option>
+        <option value="Fan Xu">Fan Xu</option>
+        <option value="Nagalakshmi Duvvuri">Nagalakshmi Duvvuri</option>
+        <option value="Jimish Dodia">Jimish Dodia</option>
+        <option value="Clarice Liao">Clarice Liao</option>
+        <option value="Glenn Liao">Glenn Liao</option>
+        <option value="-CHINA-">-CHINA-</option>
+        <option value="Taiwan">Taiwan</option>
+      </select>
       <label for="Note">Note:</label>
-      <input type="Note" name="Note" id="Note">     
+      <input type="text" name="Note" id="Note">    
+<br>
+      <label for="Received_Date">Received_Date:</label>
+      <input type="text" name="Received_Date" id="Received_Date">     
+      <label for="Received_Items">Received_Items:</label>
+      <input type="text" name="Received_Items" id="Received_Items">     
+      <label for="Inventory_Status">Inventory_Status:</label>
+      <!-- <input type="text" name="Inventory_Status" id="Inventory_Status" required>      -->
+      <select class="select2-enable" id="Inventory_Status" name="Inventory_Status" style="width: 400px;">
+        <option></option> <!-- Placeholder for searching or typing -->
+        <option value="Futuredial">Futuredial</option>
+        <option value="FedEx Loan">FedEx Loan</option>
+        <option value="Samsung Loan">Samsung Loan</option>
+        <option value="ITOCHU Loan">ITOCHU Loan</option>
+        <option value="T-Mobile Loan">T-Mobile Loan</option>
+      </select>
+      <label for="Expected_Return">Expected_Return:</label>
+      <input type="text" name="Expected_Return" id="Expected_Return">     
+      <label for="Actual_Return">Actual_Return:</label>
+      <input type="text" name="Actual_Return" id="Actual_Return">     
+      <label for="To_China_Date">To_China_Date:</label>
+      <input type="text" name="To_China_Date" id="To_China_Date">     
+      <label for="Who_Bring_Over">Who_Bring_Over:</label>
+      <input type="text" name="Who_Bring_Over" id="Who_Bring_Over">     
+      <label for="Bring_Over_Items">Bring_Over_Items:</label>
+      <input type="text" name="Bring_Over_Items" id="Bring_Over_Items">     
+      <label for="China_Return">China_Return:</label>
+      <input type="text" name="China_Return" id="China_Return">     
+
      <div class="sub">
       <button type="submit">Submit</button>
      </div> 

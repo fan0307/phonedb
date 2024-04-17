@@ -9,32 +9,48 @@ const Schema = mongoose.Schema;
 
 //where  Mongoose model provides an interface to the database for creating, querying, updating, deleting records, etc.
 
-const UserSchema = new Schema({
-  name: {
+// const UserSchema = new Schema({
+//   name: {
+//     type: String,
+//     required: true,
+//   },
+//   email: {
+//     type: String,
+//     required: true,
+//   },
+//   password: {
+//     type: String,
+//     required: true
+//   },
+//   address:{
+//     type:String,
+//     required: true
+//   },
+//   number:{
+//     type:Number,
+//     required: true
+//   },
+// },  //this will auto update the timestamp when we do inserting or updating documents of this type schema
+// { timestamps: true });
+
+const userSchema = new Schema({
+  username: String,
+  password: String, // Store a hashed password, never plain text
+  role: {
     type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-  },
-  password: {
-    type: String,
-    required: true
-  },
-  address:{
-    type:String,
-    required: true
-  },
-  number:{
-    type:Number,
-    required: true
-  },
-},  //this will auto update the timestamp when we do inserting or updating documents of this type schema
+    enum: ['admin', 'guest'],
+    default: 'guest'
+  }
+  // other fields...
+},
 { timestamps: true });
 
-const User = mongoose.model('User', UserSchema);
+const User = mongoose.model('User', userSchema);
+
 module.exports = User;
+
+// const User = mongoose.model('User', UserSchema);
+// module.exports = User;
 
 /*at first we make a schema that define structure and then created model based on that schema in 33 by 
   passing 2args 1st is singular name of collection then the schema that define structure for that object */

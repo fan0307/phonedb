@@ -241,5 +241,11 @@
         width: 100%;
       }
     }
+    .esn-cell {
+      max-width: 150px; /* Adjust the max-width as needed */
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
     
     

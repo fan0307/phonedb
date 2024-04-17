@@ -10,17 +10,25 @@ const Schema = mongoose.Schema;
 //where  Mongoose model provides an interface to the database for creating, querying, updating, deleting records, etc.
 
 const PhoneSchema = new Schema({
-  esn: {
+  maker: {
     type: String,
-    required: true
+    required: true,
   },
   model: {
     type: String,
     required: true,
   },
+  AKA:{
+    type:String,
+    required: false
+  },
   carrier: {
     type: String,
     required: true,
+  },  
+  esn: {
+    type: String,
+    required: true
   },
   barcode:{
     type:String,
@@ -34,6 +42,42 @@ const PhoneSchema = new Schema({
     type:String,
     required: false
   },
+  Received_Date:{
+    type:String,
+    required: false
+  },
+  Received_Items:{
+    type:String,
+    required: false
+  },
+  Inventory_Status:{
+    type:String,
+    required: true
+  },
+  Expected_Return:{
+    type:String,
+    required: false
+  },      
+  Actual_Return:{
+    type:String,
+    required: false
+  }, 
+  To_China_Date:{
+    type:String,
+    required: false
+  }, 
+  Who_Bring_Over:{
+    type:String,
+    required: false
+  },
+  Bring_Over_Items:{
+    type:String,
+    required: false
+  },  
+  China_Return:{
+    type:String,
+    required: false
+  },   
   Note:{
     type:String,
     required: false
