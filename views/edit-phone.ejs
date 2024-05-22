@@ -31,6 +31,8 @@ $(document).ready(function() {
         <option value="<%= phone.maker %>"><%= phone.maker %></option> >
         <option value="Apple">Apple</option>
         <option value="Samsung">Samsung</option>
+        <option value="Verizon">Verizon</option>
+        <option value="T-Mobile">T-Mobile</option>
         <option value="HTC">HTC</option>
         <option value="Google">Google</option>
         <option value="Motorola">Motorola</option>
@@ -44,10 +46,8 @@ $(document).ready(function() {
         <option value="<%= phone.carrier %>"><%= phone.carrier %></option> 
         <option value="AT&T">AT&T</option>
         <option value="Verizon">Verizon</option>
+        <option value="T-Mobile">T-Mobile</option>
         <option value="Sprint">Sprint</option>
-        <option value="T-Mobile US">T-Mobile US</option>
-        <option value="T-Mobile Germany">T-Mobile Germany</option>
-        <option value="T-Mobile UK">T-Mobile UK</option>
         <option value="Futuredial">Futuredial</option>
       </select>
       <!-- <input type="text" value="<%= phone.carrier %>" name="carrier" id="carrier" required> -->
@@ -58,7 +58,8 @@ $(document).ready(function() {
       <label for="CurLoc">Cur Loc:</label>
       <select class="select2-enable" name="CurLoc" id="CurLoc" style="width: 400px;">
         <option value=<%= phone.CurLoc %>><%= phone.CurLoc %></option>
-        <option value=".">.</option>
+        <option value="Phone Room">Phone Room</option>
+        <option value="Return">Return</option>
         <option value="Adrian Xu">Adrian Xu</option>
         <option value="Chris Chen">Chris Chen</option>
         <option value="Jason Li">Jason Li</option>
@@ -69,12 +70,13 @@ $(document).ready(function() {
         <option value="Darren Madonick">Darren Madonick</option>
         <option value="Hexi Huang">Hexi Huang</option>
         <option value="Richard Cao">Richard Cao</option>
+        <option value="Tam Bui">Tam Bui</option>
         <option value="Fan Xu">Fan Xu</option>
         <option value="Nagalakshmi Duvvuri">Nagalakshmi Duvvuri</option>
         <option value="Jimish Dodia">Jimish Dodia</option>
         <option value="Clarice Liao">Clarice Liao</option>
         <option value="Glenn Liao">Glenn Liao</option>
-        <option value="-CHINA-">-CHINA-</option>
+        <option value="China">China</option>
         <option value="Taiwan">Taiwan</option>
       </select>
       <label for="Note">Note:</label>
@@ -92,6 +94,7 @@ $(document).ready(function() {
         <option value="Samsung Loan">Samsung Loan</option>
         <option value="ITOCHU Loan">ITOCHU Loan</option>
         <option value="T-Mobile Loan">T-Mobile Loan</option>
+        <option value="Verizon Loan">Verizon Loan</option>
       </select>
       <!-- <input type="text" value="<%= phone.Inventory_Status %>" name="Inventory_Status" id="Inventory_Status" required>      -->
       <label for="Expected_Return">Expected_Return:</label>
