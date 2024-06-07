@@ -22,6 +22,51 @@
       border-bottom: 1px solid #ddd;
       text-transform: uppercase;
     }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      background-color: #f8f9fa;
+    }
+    
+    .site-title {
+      flex: 1;
+    }
+    
+    .site-title h1 {
+      margin: 0;
+    }
+    
+    .nav-links {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .nav-links li {
+      margin-right: 15px;
+    }
+    
+    .nav-links a {
+      text-decoration: none;
+      color: #063225;
+    }
+    
+    .nav-links a:hover {
+      text-decoration: underline;
+    }
+    
+    .nav-username {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .nav-username li {
+      color: #343a40;
+    }
     nav ul{
       display: flex;
       justify-content: space-between;

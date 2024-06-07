@@ -4,17 +4,12 @@
 
 
 <body>
-  <%- include("./partials/nav.ejs") %>
+  <%- include("./partials/nav.ejs",{user: user}) %>
 
 
   <div class="blogs content">
-    
-    <% if (locals.user) { %>
-      <h3>Welcome, <%= user.username %></h3>
-    <% } else { %>
-      <h3>Welcome, Guest</h3>
-    <% } %>
 
+    <h3><%= message %></h3>
     <form action="/search" method="post">
         <label for="keywords">Search Keywords:</label>
         <input type="text" id="keywords" name="keywords" required>

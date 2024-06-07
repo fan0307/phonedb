@@ -34,8 +34,8 @@ app.use(
 app.use(express.static('public')); //this will helps to use style.css file
 app.use(express.urlencoded({ extended: true })); //this will helps to get submitted data of form in req.body obj
 
-var search = require('./routes/search');
-app.use('/',search);
+// var search = require('./routes/search');
+// app.use('/',search);
 /**************************auth****************************************************/
 const authenticate = async (req, res, next) => {
   try {
@@ -61,8 +61,8 @@ const isAdmin = (req, res, next) => {
 
 /***************************** login++ **************************************************/
 const users = [
-  { username: 'admin', password: 'password' },
-  { username: 'user', password: '123456' },
+  { username: 'admin', password: 'password', role:'admin' },
+  { username: 'user', password: '123456', role:'user' },
 ];
 
 // Middleware to check if a user is logged in
@@ -74,6 +74,7 @@ function requireLogin(req, res, next) {
     res.redirect('/login');
   }
 }
+
 // Routes
 // app.get('/', requireLogin, (req, res) => {
 //   // Your CRUD operations and views here
@@ -87,7 +88,6 @@ app.get('/login', (req, res) => {
 
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
-
   const user = users.find((u) => u.username === username && u.password === password);
 
   if (user) {
@@ -98,49 +98,49 @@ app.post('/login', (req, res) => {
   }
 });
 
+// app.get('/logout', (req, res) => {
+//   req.session.destroy(() => {
+//     res.redirect('/login');
+//   });
+// });
 app.get('/logout', (req, res) => {
+  const redirectUrl = req.headers.referer || '/'; // Get the current page URL to redirect back to it
   req.session.destroy(() => {
-    res.redirect('/login');
+    res.redirect(redirectUrl);
   });
 });
-
 /****************************login--***************************************************/
 
 // home routes
+// app.get('/', (req, res) => {
+//   res.redirect('/phones'); //this will redirect page to /phones
+// });
+// Middleware for setting `user` in all views
+app.use((req, res, next) => {
+  res.locals.user = req.session.user || null;
+  next();
+});
+var search = require('./routes/search');
+app.use('/',search);
+
+// Home route: Set message and redirect to /phones
 app.get('/', (req, res) => {
-  res.redirect('/phones'); //this will redirect page to /phones
+  if (req.session.user) {
+    req.session.message = req.session.user.role === 'admin' ? 'Welcome Admin' : 'Welcome User';
+  } else {
+    req.session.message = 'Welcome Guest';
+  }
+  res.redirect('/phones');
 });
 
-//users i.e index route
-// app.get('/users',(req,res)=>{
-//   console.log("req made on"+req.url);
-//    User.find().sort({createdAt:-1})//it will find all data and show it in descending order
-//     .then(result => { 
-//       res.render('index', { users: result ,title: 'Home' }); //it will then render index page along with users
-//     })
-//     .catch(err => {
-//       console.log(err);
-//     });
-// })
-//phones i.e index route
-// app.get('/phones',requireLogin,(req,res)=>{
-//   console.log("req made on"+req.url);
-//   console.log(req.session);
-//    Phone.find().sort({createdAt:-1})//it will find all data and show it in descending order
-//     .then(result => { 
-//       res.render('phone', { phones: result ,title: 'Phone-Home',user: req.session.user }); //it will then render index page along with users
-//     })
-//     .catch(err => {
-//       console.log(err);
-//     });
-// })
 
 app.get('/phones',(req,res)=>{
   console.log("req made on"+req.url);
   console.log(req.session);
    Phone.find().sort({createdAt:-1})//it will find all data and show it in descending order
     .then(result => { 
-      res.render('phone', { phones: result ,title: 'Phone-Home'}); //it will then render index page along with users
+      const message = req.session.message || '';
+      res.render('phone', { phones: result ,title: 'Phone-Home', message, user: req.session.user}); //it will then render index page along with users
     })
     .catch(err => {
       console.log(err);
@@ -153,53 +153,28 @@ app.get('/about',(req,res)=>{
   res.render('about',{title:'About'});
 })
 
-//route for user create
-// app.get('/user/create',(req,res)=>{
-//   console.log("GET req made on"+req.url);
-//   res.render('adduser',{title:'Add-User'});
-// })
+
 //route for phone create
 app.get('/phone/create',requireLogin,(req,res)=>{
   console.log("GET req made on"+req.url);
-  res.render('addphone',{title:'Add-Phone',user: req.session.user});
+  res.render('addphone',{title:'Add-Phone'});
 })
 
-//route for users/withvar
-// app.get('/users/:id',(req, res) => {
-//   const id = req.params.id;
-//   User.findById(id)
-//     .then(result => {
-//       res.render('details', { user: result, action:'edit',title: 'User Details' });
-//     })
-//     .catch(err => {
-//       console.log(err);
-//     });
-// });
+
 //route for phones/withvar
 app.get('/phones/:id',requireLogin,(req, res) => {
   const id = req.params.id;
   Phone.findById(id)
     .then(result => {
-      res.render('details-phone', { phone: result, action:'edit',title: 'Phone Details',user: req.session.user});
+      res.render('details-phone', { phone: result, action:'edit',title: 'Phone Details'});
     })
     .catch(err => {
       console.log(err);
     });
 });
 
-//route for edit/name/action variable that will display current value to input field
-app.get('/edit/:name/:action',(req,res)=>{
-  const name = req.params.name;
-  console.log("req made on"+req.url);
-  User.findOne({name:name})
-    .then(result => {
-      res.render('edit', { user: result ,title: 'Edit-User' });
-    })
-    .catch(err => {
-      console.log(err);
-    });
-})
-//route for PHONE edit/name/action variable that will display current value to input field
+
+//route for PHONE edit/esn/action variable that will display current value to input field
 app.get('/edit-phone/:esn/:action',(req,res)=>{
   const esn = req.params.esn;
   console.log("req made on"+req.url);
@@ -250,20 +225,7 @@ app.post('/phone/create',(req,res)=>{
     });
 
 })
-//route for updating users data
-app.post('/edit/:id',(req,res)=>{
-  console.log("POST req made on"+req.url);
-  User.updateOne({_id:req.params.id},req.body) //then updating that user whose id is get from url 
-                                               //first passing id which user is to be updated than passing update info
-    .then(result => {
-      res.redirect('/users');//is success save this will redirect to home page
-      console.log("Users profile Updated");
-    })
-    .catch(err => { //if data not saved error showed
-      console.log(err);
-    });
 
-})
 //route for updating phones data
 app.post('/edit-phone/:id',(req,res)=>{
   console.log("POST req made on"+req.url);

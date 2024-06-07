@@ -2,13 +2,25 @@
   <div class="site-title">
     <a href="/"><h1>Phonedb</h1></a>
   </div>
-  <ul>
+  <ul class="nav-links">
     <li><a href="/phones">Home</a></li>
     <li><a href="/phone/create">Add-Phone</a></li>
     <li><a href="/search">Search</a></li>
     <!-- <li><a href="/users">User</a></li>
     <li><a href="/user/create">Add-User</a></li>    -->
     <li><a href="/about">About</a></li>
-    <li><a href="/logout">Logout</a></li>
+    <!-- <li><a href="/logout">Logout</a></li> -->
+    <% if (user) { %>
+      <li><a href="/logout">Logout</a></li>
+    <% } else { %>
+      <li><a href="/login">Login</a></li>
+    <% } %>
   </ul>
+  <div class="nav-username">    
+    <% if (user) { %>
+    <li><%= user.username %></li>
+  <% } else { %>
+    <li>guest</li>
+  <% } %>
+  </div>
 </nav>
