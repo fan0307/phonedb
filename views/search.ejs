@@ -25,7 +25,8 @@
             <% if (locals.phones && locals.phones.length > 0) { %>
                 <table>
                     <tr>
-                        <th>ESN</th>
+                        <th class="esn-cell">ESN</th>
+                        <th>Maker</th>
                         <th>Model</th>
                         <th>Carrier</th>
                         <th>Barcode</th>
@@ -36,7 +37,8 @@
                     </tr>
                 <% phones.forEach(phone => { %>
                     <tr onclick="window.location='/phones/<%= phone.id %>'" style="cursor:pointer;">
-                        <td><%= phone.esn %></td>
+                        <td class="esn-cell"><%= phone.esn %></td>
+                        <td><%= phone.maker %></td>
                         <td><%= phone.model %></td>
                         <td><%= phone.carrier %></td>
                         <td><%= phone.barcode %></td>

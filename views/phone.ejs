@@ -21,6 +21,7 @@
       <table>
           <tr>
               <th class="esn-cell">ESN</th>
+              <th>Maker</th>
               <th>Model</th>
               <th>Carrier</th>
               <th>Barcode</th>
@@ -32,6 +33,7 @@
       <% phones.forEach(phone => { %>
           <tr onclick="window.location='/phones/<%= phone.id %>'" style="cursor:pointer;">
               <td class="esn-cell"><%= phone.esn %></td>
+              <td><%= phone.maker %></td>
               <td><%= phone.model %></td>
               <td><%= phone.carrier %></td>
               <td><%= phone.barcode %></td>

@@ -15,6 +15,7 @@ router.post('/search', async (req, res) => {
         const phones = await Phone.find({
             $or: [
                 { esn: { $regex: keywords, $options: 'i' } },
+                { maker: { $regex: keywords, $options: 'i' } },
                 { model: { $regex: keywords, $options: 'i' } },
                 { carrier: { $regex: keywords, $options: 'i' } },
                 { barcode: { $regex: keywords, $options: 'i' } },
